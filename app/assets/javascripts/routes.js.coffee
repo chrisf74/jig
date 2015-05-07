@@ -23,3 +23,9 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
     name      : 'newTopic'
     urlPattern: 'topics/new'
     action    : App.Actions.NewTopic
+
+  new Routes.TopicIndex
+  new Routes.ShowTopic
+  new Routes.ShowSubTopic
+  new Routes.EditTopic
+  new Routes.NewTopic
