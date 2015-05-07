@@ -7,10 +7,14 @@ App.module "Actions", (Actions, App, Backbone, Marionette, $, _) ->
 
   class Actions.TopicIndex extends Action
     contentView: App.Views.TopicIndex
-    onRun: -> @state.topics = App.Models.topics
+    onRun: ->
+      @state.topics = App.Models.topics
 
   class Actions.ShowTopic extends Action
     contentView: App.Views.ShowTopic
+    onRun: ->
+      @state.topic = App.Models.topics.get @params.topicId
+      @state.subtopicId = @params.subtopicId
 
   class Actions.EditTopic extends Action
     contentView: App.Views.EditTopic

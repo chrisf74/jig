@@ -1,1 +1,1 @@
-<a href="<%= @getRouteUrl('showTopic', {id: @id}) %>">Topic <%= @id %></a>
+<a href="<%= @getRouteUrl('showTopic', {topicId: @id}) %>">Topic <%= @id %></a>

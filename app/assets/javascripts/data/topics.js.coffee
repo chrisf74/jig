@@ -11,7 +11,8 @@ window.topics = [
     content: """
       <h1 id="2">Topic 2</h1>
       <p>This is text about topic <strong>2</strong></p>
-      <h2 id="2.1">Topic 2.1</h2>
+      <p><a href="topics/2/subtopics/2_1">Go to topic 2.1</a></p>
+      <h2 id="2_1">Topic 2.1</h2>
       <p>This is text about topic <strong>2.1</strong></p>
     """
   },
@@ -20,8 +21,6 @@ window.topics = [
     content: """
       <h1 id="3">Topic 3</h1>
       <p>This is text about topic <strong>3</strong></p>
-      <h2 id="3.1">Topic 3.1</h2>
-      <p>This is text about topic <strong>3.1</strong></p>
     """
   },
 ]

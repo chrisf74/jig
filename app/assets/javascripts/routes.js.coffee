@@ -6,12 +6,12 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
 
   class Routes.ShowTopic extends App.Route
     name      : 'showTopic'
-    urlPattern: 'topics/:id'
+    urlPattern: 'topics/:topicId'
     action    : App.Actions.ShowTopic
 
   class Routes.ShowSubTopic extends App.Route
     name      : 'showSubTopic'
-    urlPattern: 'topics/:topicId/subtopics/:id'
+    urlPattern: 'topics/:topicId/subtopics/:subtopicId'
     action    : App.Actions.ShowTopic
 
   class Routes.EditTopic extends App.Route
