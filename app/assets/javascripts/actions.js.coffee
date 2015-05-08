@@ -14,6 +14,7 @@ App.module "Actions", (Actions, App, Backbone, Marionette, $, _) ->
       @state.topics = App.Models.topics
 
   class Actions.ShowTopic extends Action
+    beforeFilters: -> [App.Filters.SetNextTopicId]
     contentView: App.Views.ShowTopic
     onRun: ->
       @state.topic = App.Models.topics.get @params.topicId

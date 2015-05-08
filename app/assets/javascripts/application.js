@@ -29,5 +29,6 @@
 //= require app
 //= require models
 //= require views
+//= require filters
 //= require actions
 //= require routes

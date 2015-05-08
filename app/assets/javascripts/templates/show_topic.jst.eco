@@ -1,2 +1,3 @@
 <a href="<%= @getRouteUrl('topicIndex') %>">Go to topic index</a>
 <div class="topic-content"></div>
+<a class="next-topic-link" href="#">Go to next topic</a>

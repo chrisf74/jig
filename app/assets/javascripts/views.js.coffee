@@ -24,6 +24,12 @@ App.module "Views", (Views, App, Backbone, Marionette, $, _) ->
         @$("##{subtopicId}").show()
         @$('.topic-content a').hide()
 
+      if nextTopicId = @pageState.get('nextTopicId')
+        url = App.getRouteUrl('showTopic', {topicId:nextTopicId})
+        @$('.next-topic-link').attr('href', url)
+      else
+        @$('.next-topic-link').hide()
+
   class Views.EditTopic extends App.ItemView
 
   class Views.NewTopic extends App.ItemView
