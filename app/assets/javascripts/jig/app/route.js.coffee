@@ -1,69 +1,112 @@
 do (Backbone, Marionette, Jig, $, _) ->
   Jig.extendApp (App) ->
+    ###
+    TODO: Find out how to mixin super class before/after actions into instances.
+    ###
     class App.Route extends Marionette.Object
 
-      # Make sure route class was defined with necessary
-      # attributes.
-      _validate: ->
+      ###
+      Default filters
+      ###
+      beforeAction: ['foo']
+      afterAction : []
+
+      constructor: (args...) ->
+        context = @
+        parent  = context.constructor.__super__
+
+        beforeAction = []
+        afterAction  = []
+
+        while parent
+          if parent.beforeAction and parent.beforeAction.length
+            beforeAction.unshift parent.beforeAction...
+
+          if parent.afterAction and parent.afterAction.length
+            afterAction.unshift parent.afterAction...
+
+          parent = parent.constructor.__super__
+
+        @beforeAction.unshift beforeAction...
+        @afterAction.unshift afterAction...
+        super args...
+
+      ###
+      Validate route class.
+      ###
+      validate: ->
         unless @name?
           throw new Error "Route has no name"
-
+        unless @view?
+          throw new Error "#{@name} route has no view"
         unless @urlPattern?
           throw new Error "#{@name} route has no urlPattern"
-          
-        unless @action?
-          throw new Error "#{@name} route has no action"
 
-      # Initialize route instance. If urlPattern is a
-      # string that contains param parts, extract the
-      # params and store them as param keys.
+      ###
+      Tie this route into the app.
+      ###
       initialize: ->
-        @_validate()
+        @validate()
 
-        @router = new Backbone.Router
-        {@root} = App.historyOptions
+        # Set route on app router. Call on route method when
+        # any route is triggered.
+        App.router.route @urlPattern, @name, @onMatch
+        @listenTo App.router, 'route', @onRoute
 
-        @router.route @urlPattern, "#{@name}", @onMatch
-        @listenTo App, "route", @onRoute
-
+        # If url is a string, map and store param keys. Param
+        # keys is used by the default parse params method.
         if _.isString @urlPattern
           @paramKeys = @urlPattern.match /(\(\?)?:\w+/g
           @paramKeys = _.map @paramKeys, (key) ->
             key.replace ":", ""
 
-        App.routeInstances[@name] = @
+        console.log @
 
-      # Loop through each param key and use its index to
-      # get value from arguments.
+      ###
+      Stuff to do when this route is matched.
+      ###
+      onMatch: (params) =>
+        @params = params
+        @state  = {}
+
+        # Run before action filters.
+        proceed = true
+        for filter in @beforeAction
+          proceed = filter(@)
+          break if proceed is false
+
+        # Halt here if any before action filter returned 
+        # false. Otherwise call the the action and show
+        # view.
+        return if proceed is false
+        @action?()
+        @showView?()
+
+        # Run after action filters.
+        for filter in @afterAction
+          filter(@)
+
+      ###
+      Stuff to do when route event is triggered.
+      ### 
+      onRoute: =>
+        delete @['params']
+        delete @['state']
+
+      ###
+      Create object, assign values (args) to keys (param keys).
+      ###
       parseParams: (args...) ->
         params = {}
-
         _.each @paramKeys, (key, index) ->
           params[key] = args[index]
-
         params
 
-      # Replace each param key with its value in the url
-      # string. 
+      ###
+      Replace keys (params) in url pattern with values (params).
+      ###
       getUrl: (params) ->
         url = @root + @urlPattern
-
         _.each params, (value, key) ->
           url = url.replace ":#{key}", "#{value}"
-
         url
-
-      # Called when routes url is matched.
-      onMatch: (args...) =>
-        App.trigger "route", @name  , args...
-        App.trigger "route:#{@name}", args...
-
-        params  = @parseParams args...
-        @action = new @action {params: params}
-        @action.run() unless @action.autoRun is false
-
-      # Called when any route is matched.
-      onRoute: (name, args...) ->
-        if @action?.destroy?
-          @action.destroy()
-          delete @action
