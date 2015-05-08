@@ -5,6 +5,9 @@ App.module "Actions", (Actions, App, Backbone, Marionette, $, _) ->
       App.pageState.update @state
       App.jsAppRegion.show new @contentView
 
+  class Actions.Home extends Action
+    contentView: App.Views.Home
+
   class Actions.TopicIndex extends Action
     contentView: App.Views.TopicIndex
     onRun: ->

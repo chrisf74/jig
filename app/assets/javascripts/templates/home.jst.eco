@@ -1,0 +1,2 @@
+<h1>Home</h1>
+<a href="<%= @getRouteUrl('topicIndex') %>">Go to topic index</a>

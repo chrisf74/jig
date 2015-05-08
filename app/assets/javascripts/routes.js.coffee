@@ -1,4 +1,9 @@
 App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
+  class Routes.Home extends App.Route
+    name      : 'home'
+    urlPattern: ''
+    action    : App.Actions.Home
+
   class Routes.TopicIndex extends App.Route
     name      : 'topicIndex'
     urlPattern: 'topics'
@@ -24,6 +29,7 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
     urlPattern: 'topics/new'
     action    : App.Actions.NewTopic
 
+  new Routes.Home
   new Routes.TopicIndex
   new Routes.ShowTopic
   new Routes.ShowSubTopic
