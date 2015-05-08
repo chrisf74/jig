@@ -1,4 +1,4 @@
-# marionette-jig
+# jig
 "A jig is a type of custom-made tool used to control the location and/or motion of another tool"  
 Jig (tool) - Wikipedia
 
