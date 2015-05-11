@@ -1,3 +1,0 @@
-<a href="<%= @getRouteUrl('home') %>">Go home</a>
-<h1>Topic Index</h1>
-<div class="topic-list"></div>

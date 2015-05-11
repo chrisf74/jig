@@ -1,8 +1,5 @@
 do (Backbone, Marionette, Jig, $, _) ->
   class App extends Jig.Application
-    regions:
-      'jsAppRegion': '.js-app-region'
-
     start: (options) ->
       super options
 
@@ -32,6 +29,7 @@ do (Backbone, Marionette, Jig, $, _) ->
             Backbone.history.navigate href.attr, true
 
     onStart: ->
+      App.layout = new @Mksap.View().render()
       Backbone.history.start @historyOptions
 
   window.App = new App

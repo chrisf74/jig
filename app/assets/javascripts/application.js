@@ -27,8 +27,6 @@
 //= require_tree ./data
 //= require_tree ./templates
 //= require app
-//= require models
-//= require views
-//= require filters
-//= require actions
-//= require routes
+//= require_tree ./models
+//= require_tree ./views
+//= require_tree ./routes

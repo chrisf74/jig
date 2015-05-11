@@ -92,7 +92,7 @@ do (Backbone, Marionette, Jig, $, _) ->
       ###
       onMatch: (params...) =>
         @params = @parseParams(params...)
-        @state  = {}
+        @state  = {view: @view}
 
         # Run before action filters.
         proceed = true
@@ -105,13 +105,8 @@ do (Backbone, Marionette, Jig, $, _) ->
         return if proceed is false
         @action?()
 
-        # Call before update page state method and then
-        # update the page state model.
-        @beforeUpdatePageState?()
-        App.pageState.update(@state)
-
-        # Call show view and after action filters.
-        @showView?()
+        # Update the page model and call after action filters.
+        App.page.update(@state)
         for filter in @afterAction then filter(@)
 
       ###
