@@ -1,5 +1,5 @@
 do (Backbone, Marionette, $, _) ->
   window.Jig =
-    VERSION  : '0.0.1'
+    VERSION  : '2.0.0'
     appExts  : []
     extendApp: (fn) -> @appExts.push fn

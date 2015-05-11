@@ -1,8 +1,7 @@
-# App.module "Filters", (Filters, App, Backbone, Marionette, $, _) ->
-#   class Filters.SetNextTopicId extends App.Filter
-#     run: (action) ->
-#       {topics}  = App.Models
-#       {topicId} = action.params
+App.module "Filters", (Filters, App, Backbone, Marionette, $, _) ->
+  Filters.setNextTopicId = (route) ->
+    {topics}  = App.Models
+    {topicId} = route.params
 
-#       if topicId < topics.length
-#         action.state.nextTopicId = parseInt(topicId) + 1
+    if topicId < topics.length
+      route.state.nextTopicId = parseInt(topicId) + 1

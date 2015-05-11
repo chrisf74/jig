@@ -1,6 +1,10 @@
 do (Backbone, Marionette, Jig, $, _) ->
   Jig.extendApp (App) -> 
     class App.ContentModel extends Backbone.Model
+
+      ###
+      Load content from server via ajax promise.
+      ###
       loadContent: ->
         @_loadedCount or= 0
         @_loadedCount += 1
@@ -18,8 +22,10 @@ do (Backbone, Marionette, Jig, $, _) ->
 
         return @_contentPromise
 
-      # Set the table content immediately, but update _loadedCount
-      # as if loadContent() were called.
+      ###
+      Set the table content immediately, but update _loadedCount
+      as if loadContent() were called.
+      ###
       setContent: (data) ->
         @_loadedCount or= 0
         @_loadedCount += 1
@@ -31,6 +37,9 @@ do (Backbone, Marionette, Jig, $, _) ->
 
         @_contentPromise = Q.resolve()
 
+      ###
+        Unload content from model
+      ###
       unloadContent: ->
         unless @_loadedCount
           throw new Error """Called unloadContent() more times than 

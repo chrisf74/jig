@@ -1,6 +1,10 @@
 do (Backbone, Marionette, Jig, $, _) ->
   Jig.extendApp (App) -> 
     class App.FormModel extends Backbone.Model
+
+      ###
+      Reset model values to defaults
+      ###
       resetToDefaults: (options) ->
         defaults = @defaults
 

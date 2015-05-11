@@ -1,35 +1,58 @@
 do (Backbone, Marionette, Jig, $, _) ->
   Jig.extendApp (App) ->
-    ###
-    TODO: Find out how to mixin super class before/after actions into instances.
-    ###
     class App.Route extends Marionette.Object
 
       ###
-      Default filters
+      Default filter lists.
       ###
-      beforeAction: ['foo']
+      beforeAction: []
       afterAction : []
 
-      constructor: (args...) ->
-        context = @
-        parent  = context.constructor.__super__
+      ###
+      Construct a route.
+      ###
+      constructor: (options = {}) ->
 
-        beforeAction = []
-        afterAction  = []
+        # Call inherit filters unless inherit filters
+        # option is set to false.
+        unless options.inheritFilters is false
+          options.inheritFilters = false
+          @inheritFilters()
 
+        # Call route super constructor.
+        super options
+
+      ###
+      Inherit filters from super class definitions.
+      ###
+      inheritFilters: ->
+
+        # Clone filter lists so we don't pollute the class
+        # with inherited filters.
+        @beforeAction = @beforeAction.slice(0)
+        @afterAction  = @afterAction.slice(0)
+
+        # Loop through ancestors...
+        parent = @constructor.__super__
         while parent
-          if parent.beforeAction and parent.beforeAction.length
-            beforeAction.unshift parent.beforeAction...
+          {beforeAction, afterAction} = parent
 
-          if parent.afterAction and parent.afterAction.length
-            afterAction.unshift parent.afterAction...
+          # Add parents non duplicate before action filters
+          # to this route.
+          if beforeAction and beforeAction.length
+            for filter in beforeAction
+              unless _.contains @beforeAction, filter
+                @beforeAction.unshift filter
 
+          # Add parents non duplicate after action filters
+          # to this route.
+          if afterAction and afterAction.length
+            for filter in afterAction
+              unless _.contains @afterAction, filter
+                @afterAction.unshift filter
+
+          # Find parent of parent.
           parent = parent.constructor.__super__
-
-        @beforeAction.unshift beforeAction...
-        @afterAction.unshift afterAction...
-        super args...
 
       ###
       Validate route class.
@@ -47,6 +70,7 @@ do (Backbone, Marionette, Jig, $, _) ->
       ###
       initialize: ->
         @validate()
+        @root = App.historyOptions.root
 
         # Set route on app router. Call on route method when
         # any route is triggered.
@@ -60,13 +84,14 @@ do (Backbone, Marionette, Jig, $, _) ->
           @paramKeys = _.map @paramKeys, (key) ->
             key.replace ":", ""
 
-        console.log @
+        # Add route to instances
+        App.routeInstances[@name] = @
 
       ###
       Stuff to do when this route is matched.
       ###
-      onMatch: (params) =>
-        @params = params
+      onMatch: (params...) =>
+        @params = @parseParams(params...)
         @state  = {}
 
         # Run before action filters.
@@ -76,15 +101,18 @@ do (Backbone, Marionette, Jig, $, _) ->
           break if proceed is false
 
         # Halt here if any before action filter returned 
-        # false. Otherwise call the the action and show
-        # view.
+        # false. Otherwise call the the action.
         return if proceed is false
         @action?()
-        @showView?()
 
-        # Run after action filters.
-        for filter in @afterAction
-          filter(@)
+        # Call before update page state method and then
+        # update the page state model.
+        @beforeUpdatePageState?()
+        App.pageState.update(@state)
+
+        # Call show view and after action filters.
+        @showView?()
+        for filter in @afterAction then filter(@)
 
       ###
       Stuff to do when route event is triggered.

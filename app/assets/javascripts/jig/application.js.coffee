@@ -2,6 +2,17 @@ do (Backbone, Marionette, Jig, $, _) ->
   class Jig.Application extends Marionette.Application
 
     ###
+    Set history options
+    ###
+    historyOptions: do ->
+      options = {pushState:false, root:'#'}
+
+      if (history?.pushState)
+        options = {pushState:true, root:'/'}
+
+      return options
+
+    ###
     Template helper functions to be mixed into all views.
     ###
     templateHelpers: {}
