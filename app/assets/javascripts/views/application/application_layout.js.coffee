@@ -20,4 +20,4 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
       @showChildView 'pageRegion', new PageView
 
     onRender: ->
-      @showChildView 'applicationNavRegion', new Application.Nav
+      @showChildView 'applicationNavRegion', new Application.NavView

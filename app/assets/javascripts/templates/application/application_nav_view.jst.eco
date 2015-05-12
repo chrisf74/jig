@@ -1,7 +1,13 @@
 <nav>
   <ul>
-    <li><a data-tab="home" href="<%= @getRouteUrl('home') %>">Home</a></li>
-    <li><a data-tab="topics" href="">Topics</a></li>
-    <li><a data-tab="questions" href="">Questions</a></li>
+    <li data-tab="home">
+      <a class="js-tab-link" href="<%= @getRouteUrl('home') %>">Home</a>
+    </li>
+    <li data-tab="topics">
+      <a class="js-tab-link" href="">Topics</a>
+    </li>
+    <li data-tab="questions">
+      <a class="js-tab-link" href="">Questions</a>
+    </li>
   </ul>
 </nav>
