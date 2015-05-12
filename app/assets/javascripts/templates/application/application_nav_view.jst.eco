@@ -1,0 +1,7 @@
+<nav>
+  <ul>
+    <li><a data-tab="home" href="<%= @getRouteUrl('home') %>">Home</a></li>
+    <li><a data-tab="topics" href="">Topics</a></li>
+    <li><a data-tab="questions" href="">Questions</a></li>
+  </ul>
+</nav>

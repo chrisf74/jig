@@ -29,4 +29,5 @@
 //= require app
 //= require_tree ./models
 //= require_tree ./views
+//= require_tree ./filters
 //= require_tree ./routes

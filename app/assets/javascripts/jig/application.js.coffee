@@ -30,7 +30,7 @@ do (Backbone, Marionette, Jig, $, _) ->
         getRouteUrl: _.bind @getRouteUrl, @
 
       # Add page model to app instance.
-      @page   = options.page
+      @page = options.page
       @page or= new Jig.Page
 
       # Call marionettes application constructor.
