@@ -5,9 +5,6 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
     getModel: ->
       App.Models.applicationNav
 
-    events:
-      'click .js-tab-link': 'changeLocation'
-
     modelEvents:
       'change:activeTab': 'toggleActiveTab'
 
@@ -17,15 +14,6 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
 
       $activeTab = @$el.find "[data-tab='#{activeTab}']"
       $activeTab.addClass 'active' if $activeTab.length
-
-    changeLocation: (e) ->
-      tab = $(e.currentTarget).closest('li').data 'tab'
-      url = @model.getUrl tab
-
-      return unless url
-
-      e.preventDefault()
-      App.navigate url, {trigger:true}
 
     onRender: ->
       @toggleActiveTab()

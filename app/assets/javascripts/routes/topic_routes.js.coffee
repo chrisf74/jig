@@ -6,3 +6,11 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
     view        : App.Topics.Index.View
 
   new Routes.Topics
+
+  class Routes.Topic extends Routes.Route
+    name        : 'topic'
+    urlPattern  : 'topics/:topicId'
+    activeTab   : 'topics'
+    view        : App.Topics.Show.View
+
+  new Routes.Topic

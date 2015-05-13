@@ -7,6 +7,3 @@ App.module "Filters", (Filters, App, Backbone, Marionette, $, _) ->
         {activeTab} = applicationNav.defaults()
 
       applicationNav.set 'activeTab', activeTab
-
-      url = Backbone.history.location.pathname
-      applicationNav.setUrl activeTab, url
