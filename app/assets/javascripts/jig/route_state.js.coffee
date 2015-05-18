@@ -11,23 +11,21 @@ do (Backbone, Marionette, Jig, $, _) ->
     ###
     _set: (newAttrs) ->
       oldAttrs = _.clone @_model.attributes
-      newView  = null
+      oldView  = oldAttrs.view
+      newView  = newAttrs.view
 
-      # If the view is going to change, then omit
-      # it from the batch set so it can be set
-      # last.
-      unless newAttrs.view is oldAttrs.view
-        newView  = newAttrs.view
-        newAttrs = _.omit newAttrs, 'view'
-        oldAttrs = _.omit oldAttrs, 'view'
-        @trigger 'before:change:view'
+      newAttrs = _.omit newAttrs, 'view'
+      oldAttrs = _.omit oldAttrs, 'view'
+      oldKeys  = _.keys oldAttrs
 
-      oldKeys = _.keys oldAttrs
       _.each oldKeys, (key) ->
         oldAttrs[key] = null
 
+      unless newView is oldView
+        @trigger 'before:change:view'
+
       @_model.set _.extend oldAttrs, newAttrs
-      @_model.set 'view', newView if newView?
+      @_model.set 'view', newView
 
     ###
     Get a value from route state model

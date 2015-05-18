@@ -76,13 +76,13 @@ do (Backbone, Marionette, Jig, $, _) ->
     ###
     Store all route instances here.
     ###
-    routeInstances: {}
+    _routeInstances: {}
 
     ###
     Get a route from route instances.
     ###
     getRoute: (routeName) ->
-      route = @routeInstances[routeName]
+      route = @_routeInstances[routeName]
       unless route
         throw "#{routeName} route does not exist"
       route

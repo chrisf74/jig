@@ -85,13 +85,14 @@ do (Backbone, Marionette, Jig, $, _) ->
             key.replace ":", ""
 
         # Add route to instances
-        App.routeInstances[@name] = @
+        App._routeInstances[@name] = @
 
       ###
       Stuff to do when this route is matched.
       ###
       onMatch: (params...) =>
-        @state = {view: @view}
+        if @state? then @state = _.clone @state
+        else @state = {view: @view}
 
         # Add params to state object.
         _.extend @state, @parseParams(params...)
