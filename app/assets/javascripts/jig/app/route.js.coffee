@@ -91,8 +91,7 @@ do (Backbone, Marionette, Jig, $, _) ->
       Stuff to do when this route is matched.
       ###
       onMatch: (params...) =>
-        if @state? then @state = _.clone @state
-        else @state = {view: @view}
+        @state = {view: @view}
 
         # Add params to state object.
         _.extend @state, @parseParams(params...)
