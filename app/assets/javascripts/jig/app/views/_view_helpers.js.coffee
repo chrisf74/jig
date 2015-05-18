@@ -6,9 +6,9 @@ do (Backbone, Marionette, Jig, $, _) ->
       Add stuff to views before constructed.
       ###
       beforeConstructed: (args...) ->
-        @pageEvents or= {}
-        @page         = App.page
-        @model        = @getModel() if @getModel
+        @routeStateEvents or= {}
+        @routeState         = App.routeState
+        @model              = @getModel() if @getModel
 
       ###
       Add stuff to views after constructred.
@@ -19,14 +19,14 @@ do (Backbone, Marionette, Jig, $, _) ->
       Bind custom entity events here.
       ###
       bindCustomEntityEvents: (args...) ->
-        @bindEntityEvents @page, @pageEvents
+        @bindEntityEvents @routeState, @routeStateEvents
         return @
 
       ###
       Unbind custom entity events here.
       ###
       unbindCustomEntityEvents: (args...) ->
-        @unbindEntityEvents @page, @pageEvents
+        @unbindEntityEvents @routeState, @routeStateEvents
         return @
 
       ###

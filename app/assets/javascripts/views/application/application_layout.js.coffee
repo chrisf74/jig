@@ -7,16 +7,15 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
       'applicationNavRegion': '.js-application-nav-region'
       'pageRegion'          : '.js-page-region'
 
-    pageEvents:
-      'before:update': 'emptyPageView'
-      'change:view'  : 'showPageView'
+    routeStateEvents:
+      'before:change:view': 'emptyPageRegion'
+      'change:view'       : 'showPageView'
 
-    emptyPageView: ->
-      if @page.viewIsChanging()
-        @pageRegion.empty()
+    emptyPageRegion: ->
+      @pageRegion.empty()
 
     showPageView: ->
-      PageView = @page.get('view')
+      PageView = @routeState.get('view')
       @showChildView 'pageRegion', new PageView
 
     onRender: ->

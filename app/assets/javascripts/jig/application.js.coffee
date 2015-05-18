@@ -29,9 +29,9 @@ do (Backbone, Marionette, Jig, $, _) ->
       _.extend @templateHelpers,
         getRouteUrl: _.bind @getRouteUrl, @
 
-      # Add page model to app instance.
-      @page = options.page
-      @page or= new Jig.Page
+      # Add route state model to app instance.
+      @routeState   = options.routeState
+      @routeState or= new Jig.RouteState
 
       # Call marionettes application constructor.
       super options

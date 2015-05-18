@@ -91,8 +91,10 @@ do (Backbone, Marionette, Jig, $, _) ->
       Stuff to do when this route is matched.
       ###
       onMatch: (params...) =>
-        @params = @parseParams(params...)
-        @state  = {view: @view}
+        @state = {view: @view}
+
+        # Add params to state object.
+        _.extend @state, @parseParams(params...)
 
         # Run before action filters.
         proceed = true
@@ -105,8 +107,9 @@ do (Backbone, Marionette, Jig, $, _) ->
         return if proceed is false
         @action?()
 
-        # Update the page model and call after action filters.
-        App.page.update(@state)
+        # Set this routes state attributes on route state
+        # model. Call after action filters.
+        App.routeState._set(@state)
         for filter in @afterAction then filter(@)
 
       ###
