@@ -5,4 +5,18 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       figures  : null
       content  : null
       tables   : null
-      book     : null
+
+# book
+#   has topics
+#   has questions
+#   has progress
+
+# topic
+#   has questions
+
+# question
+#   has topics
+
+# quiz
+#   has questions
+#   has progress
