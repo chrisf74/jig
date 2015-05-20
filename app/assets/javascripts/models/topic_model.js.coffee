@@ -5,3 +5,4 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       figures  : null
       content  : null
       tables   : null
+
