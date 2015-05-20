@@ -14,10 +14,3 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
     view        : App.Books.Show.View
 
   new Routes.Book
-
-  ###
-    BookTopics
-    book/:bookId/topics
-    BookQuestions
-    book/:bookId/questions
-  ###
