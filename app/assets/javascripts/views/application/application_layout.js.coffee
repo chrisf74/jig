@@ -4,8 +4,7 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
     template: 'application/application_layout'
 
     regions:
-      'applicationNavRegion': '.js-application-nav-region'
-      'pageRegion'          : '.js-page-region'
+      'pageRegion' : '.js-page-region'
 
     routeStateEvents:
       'before:change:view': 'emptyPageRegion'
@@ -17,6 +16,3 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
     showPageView: ->
       PageView = @routeState.get('view')
       @showChildView 'pageRegion', new PageView
-
-    onRender: ->
-      @showChildView 'applicationNavRegion', new Application.NavView
