@@ -24,10 +24,8 @@
 //= require_tree ./jig
 
 // Example App
-//= require_tree ./data
 //= require_tree ./templates
 //= require app
 //= require_tree ./models
 //= require_tree ./views
-//= require_tree ./filters
 //= require_tree ./routes

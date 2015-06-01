@@ -44,3 +44,6 @@ group :development, :test do
 end
 
 gem 'eco'
+
+# Asset precompilation fails if the bootstrap-sass gem is only in the assets group
+gem "bootstrap-sass", "~> 3.3.2"
