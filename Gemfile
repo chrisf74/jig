@@ -41,9 +41,18 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Rspec
+  gem 'rspec'
+  gem 'rspec-rails'
+
+  # Factory girl
+  gem 'factory_girl_rails'
 end
 
 gem 'eco'
+gem 'bootstrap-sass', '~> 3.3.2'
+gem 'bcrypt'
 
-# Asset precompilation fails if the bootstrap-sass gem is only in the assets group
-gem "bootstrap-sass", "~> 3.3.2"
+
+
