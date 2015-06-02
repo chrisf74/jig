@@ -2,19 +2,19 @@ require 'spec_helper'
 
 describe User do
   before :each do
-    @user = User.new(email:"foo@example.com", password_digest:"foo")
+    @user = FactoryGirl.create(:user)
   end
 
   it "should have email" do
-    @user.valid?.should == true
+    expect(@user.valid?).to be true
   end
 
   it "email should not be too long" do
     @user.email = "a" * 244 + "@example.com"
-    @user.valid?.should_not == true
+    expect(@user.valid?).not_to be true
   end
 
-  it "should allow valid email addresses" do
+  it "email validation should accept valid addresses" do
     valid_addresses = %w[
       user@example.com 
       USER@foo.COM 
@@ -24,7 +24,7 @@ describe User do
 
     valid_addresses.each do |valid_address|
       @user.email = valid_address
-      @user.valid?.should == true
+      expect(@user.valid?).to be true
     end
   end
 
@@ -39,7 +39,30 @@ describe User do
 
     invalid_addresses.each do |invalid_address|
       @user.email = invalid_address
-      @user.valid?.should_not == true
+      expect(@user.valid?).not_to be true
     end
   end 
+
+  it "email addresses should be unique" do
+    duplicate_user = @user.dup
+    @user.save
+    expect(duplicate_user.valid?).not_to be true
+  end
+
+  it "email should be saved lowercase" do
+    mixed_case_email = "Foo@ExAMPle.CoM"
+    @user.email = mixed_case_email
+    @user.save
+    expect(mixed_case_email.downcase).to eq @user.reload.email
+  end
+
+  it "password should exist" do
+    @user.password = @user.password_confirmation = " " * 6
+    expect(@user.valid?).not_to be true
+  end
+
+  it "password should have a minimum length" do
+    @user.password = @user.password_confirmation = "a" * 5
+    expect(@user.valid?).not_to be true
+  end
 end

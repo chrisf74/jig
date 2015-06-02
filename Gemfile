@@ -50,6 +50,10 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
+group :test do
+  gem 'database_cleaner'
+end
+
 gem 'eco'
 gem 'bootstrap-sass', '~> 3.3.2'
 gem 'bcrypt'
