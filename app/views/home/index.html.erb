@@ -8,6 +8,9 @@
   </head>
   <body>
     <div class="js-app-region"></div>
-    <script>App.start()</script>
+    <script>
+      user = '<%= render(file: 'users/show.json.jbuilder').html_safe %>';
+      App.start({ user: JSON.parse(user) });
+    </script>
   </body>
 </html>
