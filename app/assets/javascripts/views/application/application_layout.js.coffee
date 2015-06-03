@@ -16,3 +16,8 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
     showPageView: ->
       PageView = @routeState.get('view')
       @showChildView 'pageRegion', new PageView
+
+    onRender: ->
+      $('input[name="authenticity_token"]').val(
+        $('meta[name="csrf-token"]').attr('content')
+      )
