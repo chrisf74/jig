@@ -54,6 +54,8 @@ group :test do
   gem 'database_cleaner'
 end
 
+gem 'slim', '~> 1.1.0'
+gem 'jader'
 gem 'eco'
 gem 'bootstrap-sass', '~> 3.3.2'
 gem 'bcrypt'

@@ -4,3 +4,6 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       questions: null
       name: null
       id: null
+
+  class Models.Quizzes extends App.Collection
+    model: Models.Quizzes

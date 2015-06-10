@@ -8,3 +8,6 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       topics: null
       number: null
       id: null
+
+  class Models.Questions extends App.Collection
+    model: Models.Question

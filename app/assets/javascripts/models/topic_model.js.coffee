@@ -7,3 +7,6 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       tables: null
       id: null
 
+  class Models.Topics extends App.Collection
+    model: Models.Topic
+

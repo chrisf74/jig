@@ -12,6 +12,7 @@
 //
 
 // Vendor
+//= require jade/runtime
 //= require q
 //= require json2
 //= require jquery
@@ -24,7 +25,6 @@
 //= require_tree ./jig
 
 // Example App
-//= require_tree ./templates
 //= require app
 //= require_tree ./models
 //= require_tree ./views

@@ -6,3 +6,6 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       correct: null
       answer: null
       id: null
+
+  class Models.Responses extends App.Collection
+    model: Models.Response
