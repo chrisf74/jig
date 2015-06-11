@@ -43,7 +43,7 @@ do (Backbone, Marionette, Jig, $, _) ->
         # Loop through ancestors...
         parent = @constructor.__super__
         while parent
-          {beforeAction,afterAction,skipBeforeAction,skipAfterAction} = parent
+          {beforeAction, afterAction, skipBeforeAction, skipAfterAction} = parent
 
           # Add parents non duplicate skip before action filters
           # to this route.
@@ -142,7 +142,7 @@ do (Backbone, Marionette, Jig, $, _) ->
 
         # Run after action filters.
         for filterName in @afterAction
-          
+
           # Unless we should skip this filter, invoke filter method.
           unless _.contains @skipAfterAction, filterName
             filter  = @[filterName]
