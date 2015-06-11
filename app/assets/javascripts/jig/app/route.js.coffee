@@ -9,6 +9,12 @@ do (Backbone, Marionette, Jig, $, _) ->
       afterAction : []
 
       ###
+      Default skip filter lists.
+      ###
+      skipBeforeAction: []
+      skipAfterAction : []
+
+      ###
       Construct a route.
       ###
       constructor: (options = {}) ->
@@ -29,27 +35,43 @@ do (Backbone, Marionette, Jig, $, _) ->
 
         # Clone filter lists so we don't pollute the class
         # with inherited filters.
-        @beforeAction = @beforeAction.slice(0)
-        @afterAction  = @afterAction.slice(0)
+        @skipBeforeAction = @skipBeforeAction.slice(0)
+        @beforeAction     = @beforeAction.slice(0)
+        @skipAfterAction  = @skipAfterAction.slice(0)
+        @afterAction      = @afterAction.slice(0)
 
         # Loop through ancestors...
         parent = @constructor.__super__
         while parent
-          {beforeAction, afterAction} = parent
+          {beforeAction,afterAction,skipBeforeAction,skipAfterAction} = parent
+
+          # Add parents non duplicate skip before action filters
+          # to this route.
+          if skipBeforeAction and skipBeforeAction.length
+            for filterName in skipBeforeAction
+              unless _.contains @skipBeforeAction, filterName
+                @skipBeforeAction.unshift filterName
 
           # Add parents non duplicate before action filters
           # to this route.
           if beforeAction and beforeAction.length
-            for filter in beforeAction
-              unless _.contains @beforeAction, filter
-                @beforeAction.unshift filter
+            for filterName in beforeAction
+              unless _.contains @beforeAction, filterName
+                @beforeAction.unshift filterName
+
+          # Add parents non duplicate before action filters
+          # to this route.
+          if skipAfterAction and skipAfterAction.length
+            for filterName in skipAfterAction
+              unless _.contains @skipAfterAction, filterName
+                @skipAfterAction.unshift filterName
 
           # Add parents non duplicate after action filters
           # to this route.
           if afterAction and afterAction.length
-            for filter in afterAction
-              unless _.contains @afterAction, filter
-                @afterAction.unshift filter
+            for filterName in afterAction
+              unless _.contains @afterAction, filterName
+                @afterAction.unshift filterName
 
           # Find parent of parent.
           parent = parent.constructor.__super__
@@ -98,19 +120,33 @@ do (Backbone, Marionette, Jig, $, _) ->
 
         # Run before action filters.
         proceed = true
-        for filter in @beforeAction
-          proceed = filter(@)
+        for filterName in @beforeAction
+
+          # Unless we should skip this filter, invoke filter method.
+          unless _.contains @skipBeforeAction, filterName
+            filter  = @[filterName]
+            proceed = filter(@)
+
+          # Stop invoking before filter methods if proceed is false.
           break if proceed is false
 
         # Halt here if any before action filter returned 
         # false. Otherwise call the the action.
         return if proceed is false
-        @action?()
+        proceed = @action?()
+        return if proceed is false
 
         # Set this routes state attributes on route state
-        # model. Call after action filters.
+        # model.
         App.routeState._set(@state)
-        for filter in @afterAction then filter(@)
+
+        # Run after action filters.
+        for filterName in @afterAction
+          
+          # Unless we should skip this filter, invoke filter method.
+          unless _.contains @skipAfterAction, filterName
+            filter  = @[filterName]
+            proceed = filter(@)
 
       ###
       Stuff to do when route event is triggered.
