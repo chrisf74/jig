@@ -1,5 +1,5 @@
 App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
-  class Routes.Home extends Routes.Route
+  class Routes.Home extends App.Route
     name        : 'home'
     urlPattern  : ''
     activeTab   : 'home'

@@ -1,3 +1,4 @@
+# Seed users.
 if User.count > 0
   print "Reload users? [yN] "
   confirm = STDIN.gets.strip
