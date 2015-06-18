@@ -14,26 +14,42 @@
 ActiveRecord::Schema.define(version: 20150611195510) do
 
   create_table "books", force: :cascade do |t|
+    t.string   "slug"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "questions", force: :cascade do |t|
+    t.string   "slug"
+    t.string   "name"
+    t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "quizzes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.string   "form_params"
+    t.text     "question_ids"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "responses", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.string   "answer"
+    t.string   "correct_answer"
+    t.boolean  "is_correct"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "topics", force: :cascade do |t|
+    t.string   "slug"
+    t.string   "name"
+    t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
