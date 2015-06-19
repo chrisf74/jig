@@ -7,6 +7,9 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
       tables: null
       id: null
 
+    url: ->
+      "/api/topics/#{@id}.pagejson"
+
   class Models.Topics extends App.Collection
     model: Models.Topic
 
