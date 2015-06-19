@@ -59,6 +59,7 @@ gem 'jader'
 gem 'eco'
 gem 'bootstrap-sass', '~> 3.3.2'
 gem 'bcrypt'
+gem 'json', '~> 1.8.3'
 
 
 

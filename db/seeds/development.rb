@@ -17,3 +17,12 @@ book_hash = JSON.parse(book_file)
 Book.create(book_hash)
 
 # Seed topics.
+Dir['content/bk*_ch*.json'].each do |topic_file|
+	topic_file = File.read(topic_file)
+	topic_hash = JSON.parse(topic_file)
+	Topic.create(
+		slug: topic_hash['slug'],
+		name: topic_hash['name'],
+		book_id: topic_hash['book_id'],
+		resource: "#{topic_hash['slug']}.html")
+end
