@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Api
   scope 'api' do
     resources :topics, only: [:show]
+    resources :books,  only: [:index,:show]
   end
 
   # Root

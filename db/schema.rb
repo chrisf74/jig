@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 20150611195510) do
 
   create_table "topics", force: :cascade do |t|
     t.integer  "book_id"
-    t.string   "resource"
     t.string   "slug"
     t.string   "name"
     t.datetime "created_at", null: false
