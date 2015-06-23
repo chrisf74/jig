@@ -5,9 +5,11 @@ if User.count > 0
   User.destroy_all if confirm.eql?('y')
 end    
 user_hash = [{
-  email: 'testuser@example.com',
-  password: 'testuser',
-  password_confirmation: 'testuser'
+  first_name: 'Chuck',
+  last_name: 'Norris',
+  email: 'cnorris@thebeard.com',
+  password: 'roundhouse',
+  password_confirmation: 'roundhouse'
 }]
 User.create(user_hash)
 

@@ -1,14 +1,18 @@
 App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
   class Application.Layout extends App.LayoutView
     el      : 'body'
+
     template: 'application/application_layout'
 
     regions:
-      'pageRegion' : '.js-page-region'
+      'pageRegion': '.js-page-region'
 
     routeStateEvents:
       'before:change:view': 'emptyPageRegion'
       'change:view'       : 'showPageView'
+
+    getModel: ->
+      App.user
 
     emptyPageRegion: ->
       @pageRegion.empty()

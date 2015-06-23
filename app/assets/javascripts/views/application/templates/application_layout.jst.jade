@@ -1,6 +1,7 @@
 form(accept-charset='UTF-8', method='post', action='/logout')
   input(name='authenticity_token', type='hidden', value='')
   input(name='_method', type='hidden', value='delete')
-  button(type='submit', class='logout-btn') Logout
+  | Signed in as: #{email} 
+  button(type='submit', class='logout-btn') Sign out
 
 .js-page-region

@@ -29,7 +29,6 @@ do (Backbone, Marionette, Jig, $, _) ->
             Backbone.history.navigate href.attr, true
 
     onStart: (options) ->
-      console.log options
       @user   = new @Models.User options.user
       @layout = new @Application.Layout().render()
       Backbone.history.start @historyOptions
