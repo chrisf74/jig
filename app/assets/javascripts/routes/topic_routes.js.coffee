@@ -1,20 +1,36 @@
 App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
+
+  ###
+  Index
+  ###
   class Routes.Topics extends App.Route
     urlPattern: 'topics'
+
     name: 'topics'
+
     view: App.Topics.Index
+
     action: ->
       @state.topics = App.topics
 
   new Routes.Topics
 
+  ###
+  Show
+  ###
   class Routes.Topic extends App.Route
     urlPattern: 'topics/:topicId'
+
     name: 'topic'
+
     view: App.Topics.Show
+
     action: ->
-      @state.topic = App.topics.get(@state.topicId)
-      unless @state.topic
-        @state.topic = App.topics.add(id: @state.topicId)
+      {topicId} = @state
+      topic     = App.topics.get(topicId)
+
+      unless topic
+        topic = App.topics.add(id: topicId)
+      @state.topic = topic
 
   new Routes.Topic
