@@ -1,8 +1,7 @@
 do (Backbone, Marionette, Jig, $, _) ->
   Jig.extendApp (App) ->
     class App.ItemView extends Marionette.ItemView
-      resetModel: App.viewHelpers.resetModel
-      setModel  : App.viewHelpers.setModel
+      setModel: App.viewHelpers.setModel
 
       constructor: (args...) ->
         App.viewHelpers.beforeConstructed.call @, args...
