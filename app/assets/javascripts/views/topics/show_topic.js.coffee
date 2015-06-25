@@ -12,8 +12,10 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
     modelEvents:
       'sync': 'render'
 
-    showTopic: ->
-      @model = @routeState.get('topic')
+    getModel: ->
+      @routeState.get('topic')
+
+    showContent: ->
       @model.fetch()
 
     onRender: ->

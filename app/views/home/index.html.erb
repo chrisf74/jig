@@ -9,7 +9,7 @@
   <body>
     <div class="js-app-region"></div>
     <script>
-      user = '<%= render(file: 'users/show.pagejson.jbuilder').html_safe %>';
+      user = '<%= render(file: 'users/show.json.jbuilder').html_safe %>';
       App.start({ user: JSON.parse(user) });
     </script>
   </body>
