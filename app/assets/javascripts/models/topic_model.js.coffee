@@ -5,7 +5,7 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
   ###
   class Models.Topic extends App.Model
     defaults: ->
-      content: ""
+      content: null
       book_id: null
       name: null
       id: null

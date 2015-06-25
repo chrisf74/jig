@@ -11,8 +11,8 @@ App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
       'before:change:view': 'emptyPageRegion'
       'change:view'       : 'showPageView'
 
-    getModel: ->
-      App.user
+    initialize: ->
+      @model = App.user
 
     emptyPageRegion: ->
       @pageRegion.empty()

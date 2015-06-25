@@ -8,7 +8,6 @@ do (Backbone, Marionette, Jig, $, _) ->
       beforeConstructed: (args...) ->
         @routeStateEvents or= {}
         @routeState         = App.routeState
-        @model              = @getModel() if @getModel
 
       ###
       Add stuff to views after constructred.
@@ -32,15 +31,8 @@ do (Backbone, Marionette, Jig, $, _) ->
       ###
       Set a new model on view and re-render.
       ###
-      updateModel: (model) ->
+      setModel: (model) ->
         @undelegateEvents()
         @model = model
         @delegateEvents()
         @render()
-
-      ###
-      Get model, reset it and re-render the view.
-      ###
-      refreshModel: ->
-        model = @getModel?()
-        @updateModel model

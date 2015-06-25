@@ -7,16 +7,15 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
     template: 'topics/show_topic'
 
     routeStateEvents:
-      'change:topic': 'showContent'
+      'change:topic': 'changeTopic'
 
     modelEvents:
       'sync': 'render'
 
-    getModel: ->
-      @routeState.get('topic')
-
-    showContent: ->
+    initialize: ->
+      @model = @routeState.get('topic')
       @model.fetch()
 
-    onRender: ->
-      @showContent()
+    changeTopic: ->
+      @setModel @routeState.get('topic')
+      @model.fetch()
