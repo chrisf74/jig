@@ -1,18 +1,18 @@
 [
   {
-    "slug": "bk1",
+    "id": "bk1",
     "name": "Book 1"
   },
   {
-    "slug": "bk2",
+    "id": "bk2",
     "name": "Book 2"
   },
   {
-    "slug": "bk3",
+    "id": "bk3",
     "name": "Book 3"
   },
   {
-    "slug": "bk4",
+    "id": "bk4",
     "name": "Book 4"
   }
 ]

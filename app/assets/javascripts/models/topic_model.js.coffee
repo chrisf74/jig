@@ -6,9 +6,7 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
   class Models.Topic extends App.Model
     defaults: ->
       content: null
-      book_id: null
-      name: null
-      id: null
+      loaded : false
 
     url: ->
       "/api/topics/#{@id}.json"

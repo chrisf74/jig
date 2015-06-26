@@ -9,10 +9,6 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
     regions:
       topics: '.topics-list'
 
-    onRender: ->
-      @showChildView 'topics', new Topics.List
-        collection: @routeState.get('topics')
-
   ###
   Topic Index List Item View
   ###
@@ -28,9 +24,3 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
     childView: Topics.ListItem
 
     tagName: 'ul'
-
-    collectionEvents:
-      'sync': 'render'
-
-    initialize: ->
-      @collection.fetch()

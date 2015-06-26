@@ -10,9 +10,6 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
 
     view: App.Topics.Index
 
-    action: ->
-      @state.topics = App.topics
-
   new Routes.Topics
 
   ###
@@ -24,13 +21,5 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
     name: 'topic'
 
     view: App.Topics.Show
-
-    action: ->
-      {topicId} = @state
-      topic     = App.topics.get(topicId)
-
-      unless topic
-        topic = App.topics.add(id: topicId)
-      @state.topic = topic
 
   new Routes.Topic
