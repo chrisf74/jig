@@ -6,11 +6,18 @@ do (Backbone, Marionette, Jig, $, _) ->
       Reset model values to defaults.
       ###
       resetToDefaults: (options) ->
-        if _.isFunction @defaults
-          defaults = @defaults()
+        oldAttrs = _.clone(@attributes)
+        oldKeys  = _.keys(oldAttrs)
+
+        _.each oldKeys, (key) ->
+          oldAttrs[key] = null
+
+        if _.isFunction(@defaults)
+          defAttrs = @defaults()
         else
-          defaults = @defaults
-        @set defaults, options
+          defAttrs = @defaults
+
+        @set _.extend(oldAttrs, defAttrs)
 
       ###
       Load model from server if necessary.
@@ -22,4 +29,6 @@ do (Backbone, Marionette, Jig, $, _) ->
         else
           @trigger 'loading'
           @fetch(options).then () =>
+            @set(loaded:true)
             @trigger 'loaded'
+

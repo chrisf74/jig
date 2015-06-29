@@ -10,6 +10,6 @@ class Topic < ActiveRecord::Base
   end
 
   def json_data
-  	json_data ||= JSON.parse(json_string)
+  	@json_data ||= JSON.parse(json_string)
   end
 end
