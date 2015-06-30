@@ -9,26 +9,39 @@ do (Backbone, Marionette, Jig, $, _) ->
         oldAttrs = _.clone(@attributes)
         oldKeys  = _.keys(oldAttrs)
 
+        # Nullify all the old model attributes.
         _.each oldKeys, (key) ->
           oldAttrs[key] = null
 
+        # Get default attributes.
         if _.isFunction(@defaults)
           defAttrs = @defaults()
         else
           defAttrs = @defaults
 
+        # Overwrite old attrs with default attrs.
         @set _.extend(oldAttrs, defAttrs)
 
       ###
-      Load model from server if necessary.
+      Load model returned from the servers 'show' action.
       ###
       load: (options) ->
+        # If model is already loaded, trigger the loaded 
+        # event and return the resolved promise.
         if @get('loaded') is true
-          @trigger 'loaded'
+          @trigger('loaded')
           $.Deferred().resolve(@)
+
+        # Otherwise fetch the model from the server and 
+        # return the fetch promise.
         else
-          @trigger 'loading'
-          @fetch(options).then () =>
-            @set(loaded:true)
-            @trigger 'loaded'
+          @trigger('loading')
+          @fetch(options)
+            .done(=>
+              @set(loaded:true)
+              @trigger('loaded')
+            )
+            .fail(=>
+              @trigger('loading:error', arguments)
+            )
 
