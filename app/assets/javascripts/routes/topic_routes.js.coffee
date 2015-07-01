@@ -24,6 +24,6 @@ App.module "Routes", (Routes, App, Backbone, Marionette, $, _) ->
 
     view: App.Topics.Show
 
-    action: -> @state.topic = App.topics.getOrAdd(@state.topicId)
+    action: -> @state.topic = new App.Models.Topic(id: @state.topicId)
 
   new Routes.Topic

@@ -26,22 +26,39 @@ do (Backbone, Marionette, Jig, $, _) ->
       Load model returned from the servers 'show' action.
       ###
       load: (options) ->
-        # If model is already loaded, trigger the loaded 
-        # event and return the resolved promise.
-        if @get('loaded') is true
-          @trigger('loaded')
-          $.Deferred().resolve(@)
-
-        # Otherwise fetch the model from the server and 
-        # return the fetch promise.
-        else
-          @trigger('loading')
-          @fetch(options)
+        unless @loadPromise?
+          @loadPromise = @fetch(options)
             .done(=>
-              @set(loaded:true)
+              @loaded = true
               @trigger('loaded')
             )
-            .fail(=>
-              @trigger('loading:error', arguments)
+            .fail((args) =>
+              @trigger('loading:error', args...)
             )
+        return @loadPromise
+
+
+
+      # ###
+      # Load model returned from the servers 'show' action.
+      # ###
+      # load: (options) ->
+      #   # If model is already loaded, trigger the loaded 
+      #   # event and return the resolved promise.
+      #   if @get('loaded') is true
+      #     @trigger('loaded')
+      #     $.Deferred().resolve(@)
+
+      #   # Otherwise fetch the model from the server and 
+      #   # return the fetch promise.
+      #   else
+      #     @trigger('loading')
+      #     @fetch(options)
+      #       .done(=>
+      #         @set(loaded:true)
+      #         @trigger('loaded')
+      #       )
+      #       .fail(=>
+      #         @trigger('loading:error', arguments)
+      #       )
 

@@ -1,6 +1,6 @@
 App.module "Application", (Application, App, Backbone, Marionette, $, _) ->
   class Application.Layout extends App.LayoutView
-    el      : 'body'
+    el: 'body'
 
     template: 'application/application_layout'
 

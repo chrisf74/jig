@@ -1,5 +1,5 @@
 do (Backbone, Marionette, Jig, $, _) ->
   Jig.extendApp (App) ->
     class App.Collection extends Backbone.Collection
-    	getOrAdd: App.collectionHelpers.getOrAdd
-    	load    : App.collectionHelpers.load
+    	loadModel: App.collectionHelpers.loadModel
+    	load     : App.collectionHelpers.load
