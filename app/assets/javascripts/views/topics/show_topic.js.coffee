@@ -6,16 +6,11 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
   class Topics.Show extends App.ItemView
     template: 'topics/show_topic'
 
-    modelEvents:
-      'loading:error': 'showLoadingError'
-      'loading'      : 'showLoading'
-      'loaded'       : 'showLoaded'
-
     initialize: ->
       @model = @routeState.get('topic')
 
-    showLoadingError: ->
-      console.log 'show:loading:error'
+    showError: ->
+      console.log 'show:error'
 
     showLoading: ->
       console.log 'show:loading'
@@ -24,4 +19,7 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
       console.log 'show:loaded'
 
     onRender: ->
+      @showLoading()
       @model.load()
+        .done(=> @showLoaded())
+        .fail(=> @showError())

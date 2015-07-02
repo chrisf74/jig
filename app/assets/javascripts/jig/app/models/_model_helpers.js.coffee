@@ -3,6 +3,14 @@ do (Backbone, Marionette, Jig, $, _) ->
     App.modelHelpers =
 
       ###
+      ###
+      _loadError: false
+
+      ###
+      ###
+      _loadCalls: 0
+
+      ###
       Reset model values to defaults.
       ###
       resetToDefaults: (options) ->
@@ -23,42 +31,21 @@ do (Backbone, Marionette, Jig, $, _) ->
         @set _.extend(oldAttrs, defAttrs)
 
       ###
-      Load model returned from the servers 'show' action.
       ###
       load: (options) ->
-        unless @loadPromise?
-          @loadPromise = @fetch(options)
-            .done(=>
-              @loaded = true
-              @trigger('loaded')
-            )
-            .fail((args) =>
-              @trigger('loading:error', args...)
-            )
-        return @loadPromise
+        @loadCalls += 1
+        @loadPromise or= @fetch(options)
+          .fail(=> @_loadError: true)
+
+      ###
+      ###
+      unload: (options) ->
+        if @_loadError
+          # Do something.
+
+        if @_loadCalls is 0
+          # Do nothing. Throw error?
 
 
 
-      # ###
-      # Load model returned from the servers 'show' action.
-      # ###
-      # load: (options) ->
-      #   # If model is already loaded, trigger the loaded 
-      #   # event and return the resolved promise.
-      #   if @get('loaded') is true
-      #     @trigger('loaded')
-      #     $.Deferred().resolve(@)
-
-      #   # Otherwise fetch the model from the server and 
-      #   # return the fetch promise.
-      #   else
-      #     @trigger('loading')
-      #     @fetch(options)
-      #       .done(=>
-      #         @set(loaded:true)
-      #         @trigger('loaded')
-      #       )
-      #       .fail(=>
-      #         @trigger('loading:error', arguments)
-      #       )
 
