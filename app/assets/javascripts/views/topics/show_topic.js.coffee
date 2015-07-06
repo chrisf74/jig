@@ -3,23 +3,37 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
   ###
   Show Topic View
   ###
-  class Topics.Show extends App.ItemView
+  class Topics.Show extends App.LayoutView
     template: 'topics/show_topic'
 
-    initialize: ->
-      @model = @routeState.get('topic')
+    regions:
+      'content': '.topic-content'
 
-    showError: ->
-      console.log 'show:error'
+    routeStateEvents:
+      'change:topic': 'changeTopic'
+
+    showLoadError: ->
+      console.log 'show:load:error'
 
     showLoading: ->
       console.log 'show:loading'
 
     showLoaded: ->
-      console.log 'show:loaded'
+      @showChildView 'content', new Topics.Content
+        model: @routeState.get('topic')
 
-    onRender: ->
-      @showLoading()
-      @model.load()
-        .done(=> @showLoaded())
-        .fail(=> @showError())
+    changeTopic: ->
+      @topic.unload() if @topic?
+      @topic = @routeState.get('topic')
+      @load(@topic)
+
+    onRender: -> 
+      @changeTopic()
+
+    onDestroy: ->
+      @topic.unload() if @topic?
+
+  ###
+  ###
+  class Topics.Content extends App.ItemView
+    template: 'topics/show_topic_content'

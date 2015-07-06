@@ -36,3 +36,34 @@ do (Backbone, Marionette, Jig, $, _) ->
         @model = model
         @delegateEvents()
         @render()
+
+      ###
+      Call load method on models and or collection objects.
+      ###
+      load: (objs...) ->
+        toBeLoaded = _.filter objs, (obj) ->
+          obj.isLoaded() isnt true
+
+        if toBeLoaded.length
+          @showLoading()
+          promises = _.invoke(toBeLoaded, 'load')
+          $.when(promises...)
+            .fail(=> @showLoadError())
+            .done(=> @showLoaded())
+        else
+          @showLoaded()
+
+      ###
+      Overwrite with loading ui.
+      ###
+      showLoading: ->
+
+      ###
+      Overwrite with load error ui.
+      ###
+      showLoadError: ->
+
+      ###
+      Overwrite with loaded ui. 
+      ###
+      showLoaded: ->

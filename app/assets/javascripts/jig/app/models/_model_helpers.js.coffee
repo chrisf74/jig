@@ -3,14 +3,6 @@ do (Backbone, Marionette, Jig, $, _) ->
     App.modelHelpers =
 
       ###
-      ###
-      _loadError: false
-
-      ###
-      ###
-      _loadCalls: 0
-
-      ###
       Reset model values to defaults.
       ###
       resetToDefaults: (options) ->
@@ -31,21 +23,32 @@ do (Backbone, Marionette, Jig, $, _) ->
         @set _.extend(oldAttrs, defAttrs)
 
       ###
+      How many views have called 'load' on this model
+      and therefore how many views are using this model.
+      ###
+      _loadCalls: 0
+
+      ###
+      Test to see if model is loaded.
+      ###
+      isLoaded: ->
+        @get('loaded') is true
+
+      ###
+      Load model via servers 'show' action.
       ###
       load: (options) ->
-        @loadCalls += 1
+        @_loadCalls += 1
+
         @loadPromise or= @fetch(options)
-          .fail(=> @_loadError: true)
+          .done(=>
+            @set(loaded: true)
+          )
+          .fail(=>
+            @set(loaded: false)
+          )
 
       ###
+      Unload attributes from model if possible.
       ###
       unload: (options) ->
-        if @_loadError
-          # Do something.
-
-        if @_loadCalls is 0
-          # Do nothing. Throw error?
-
-
-
-

@@ -7,22 +7,16 @@ do (Backbone, Marionette, Jig, $, _) ->
       ###
       load: (options) ->
         @loadPromise or= @fetch(options)
+          .done(=> 
+            @loaded = true
+          )
+          .fail(=> 
+            @loaded = false
+          )
 
       ###
-      Load model via servers 'show' action.
+      Test to see if collection is loaded.
       ###
-      loadModel: (id, options) ->
-        model = @get(id)
-        add   = false
-
-        # If the model is not in the collection, create
-        # a new one and set the add flag to true.
-        unless model
-          model = new @model(id:id)
-          add   = true
-
-        # Add model to collection if it isn't already
-        # there and return model's load promise.
-        return model.load().done () =>
-          @add(model) if add is true
+      isLoaded: ->
+        @loaded is true
 

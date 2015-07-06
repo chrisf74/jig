@@ -9,23 +9,18 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
     regions:
       topics: '.topics-list'
 
-    initialize: ->
-      @collection = @routeState.get('topics')
-
     showLoading: ->
       console.log 'show:loading'
 
     showLoaded: ->
-      console.log 'show:loaded'
+      @showChildView 'topics', new Topics.List
+        collection: @routeState.get('topics')
 
     showError: ->
       console.log 'show:error'
 
     onRender: ->
-      @showLoading()
-      @collection.load()
-        .done(=> @showLoaded())
-        .fail(=> @showError())
+      @load(@routeState.get('topics'))
 
   ###
   Topic Index List Item View
