@@ -14,7 +14,7 @@ user_hash = [{
 User.create(user_hash)
 
 # Seed books.
-Dir['content/bk*.json'].each do |book_file|
+Dir['content/bk[1-2-3-4].json'].each do |book_file|
   book_file = File.read(book_file)
   book_hash = JSON.parse(book_file)
   Book.create(

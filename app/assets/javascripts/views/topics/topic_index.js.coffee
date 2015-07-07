@@ -1,26 +1,27 @@
 App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
-
-  ###
-  Topic Index Layout
-  ###
   class Topics.Index extends App.LayoutView
     template: 'topics/topic_index'
 
     regions:
-      topics: '.topics-list'
+      topics: '.topic-list'
 
-  ###
-  Topic Index List Item View
-  ###
+    onRender: ->
+      topics = @routeState.get('topics')
+      topics.fetch()
+        .done(=> 
+          @showChildView 'topics', new Topics.IndexList
+            collection: topics
+        )
+        .fail(=> 
+          console.log 'topics:load:error'
+        )
+
   class Topics.IndexListItem extends App.ItemView
     template: 'topics/topic_index_list_item'
 
     tagName: 'li'
 
-  ###
-  Topic Index List View
-  ###
   class Topics.IndexList extends App.CollectionView
-    childView: Topics.ListItem
+    childView: Topics.IndexListItem
 
     tagName: 'ul'
