@@ -42,27 +42,6 @@ do (Backbone, Marionette, Jig, $, _) ->
     ajaxOptions: {}
 
     ###
-    Wrap ajax request in a promise.
-    ###
-    makeAjaxPromise: (options) ->
-      deferred = Q.defer()
-
-      # Mix user options with app default options.
-      options  = _.extend {}, @ajaxOptions, options
-
-      # Create request.
-      request = $.ajax(options)
-      .done (response) =>
-        deferred.resolve response
-      .fail (args...) =>
-        deferred.reject args
-
-      # Make available the request.abort method via promise.
-      promise = deferred.promise
-      promise.abort = -> request.abort()
-      return promise
-
-    ###
     Create app router instance.
     ###
     router: new Backbone.Router
