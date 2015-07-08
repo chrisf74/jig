@@ -6,6 +6,14 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
     url: ->
       "/api/books/#{@id}.json"
 
+    initialize: (attrs) ->
+    	@topics = new Models.Topics(attrs.topics)
+
+    parse: (attrs) ->
+    	return attrs unless @topics
+    	@topics.add(attrs.topics) if attrs.topics
+    	return attrs
+
   class Models.Books extends App.Collection
     model: Models.Book
 

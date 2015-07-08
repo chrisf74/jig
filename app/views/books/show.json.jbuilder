@@ -1,2 +1,6 @@
-json.id @book_data['id']
-json.name @book_data['name']
+json.id @book.id
+json.name @book.name
+json.topics @book.topics do |topic|
+  json.id topic.slug
+  json.name topic.name
+end
