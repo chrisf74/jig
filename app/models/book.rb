@@ -1,6 +1,5 @@
 class Book < ActiveRecord::Base
   has_many :topics
-  has_many :questions
 
   def json_path
     Rails.root.join "content/#{slug}.json"

@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20150611195510) do
   end
 
   create_table "topics", force: :cascade do |t|
+    t.string   "book_slug"
     t.integer  "book_id"
     t.string   "slug"
     t.string   "name"

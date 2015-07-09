@@ -6,19 +6,26 @@ App.module "Books", (Books, App, Backbone, Marionette, $, _) ->
       'heading': '.book-heading'
       'topics' : '.topic-list'
 
+    routeStateEvents:
+      'change:book': 'loadModels'
+
+    loadModels: ->
+      @book = @routeState.get('book')
+      @book.fetch()
+        .done(@showLoaded)
+        .fail(@showError)
+
     onRender: ->
-      book = @routeState.get('book')
-      book.fetch()
-        .done(=>
-          console.log book.get('topics')
-          @showChildView 'heading', new Books.ShowHeading
-            model: book
-          @showChildView 'topics', new App.Topics.IndexList
-            collection: book.topics
-        )
-        .fail(=>
-          console.log 'book:load:error'
-        )
+      @loadModels()
+
+    showLoaded: =>
+      @showChildView 'heading', new Books.ShowHeading
+        model: @book
+      @showChildView 'topics', new App.Topics.IndexList
+        collection: @book.topics
+
+    showError: =>
+      console.log "book:loading:error"
 
   class Books.ShowHeading extends App.ItemView
     template: 'books/show_book_heading'

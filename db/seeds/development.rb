@@ -19,7 +19,9 @@ Dir['content/bk[1-2-3-4].json'].each do |book_file|
   book_hash = JSON.parse(book_file)
   Book.create(
     name: book_hash['name'],
-    slug: book_hash['id'])
+    slug: book_hash['slug'],
+    id: book_hash['id']
+  )
 end
 
 # Seed topics.
@@ -27,7 +29,9 @@ Dir['content/bk*_ch*.json'].each do |topic_file|
 	topic_file = File.read(topic_file)
 	topic_hash = JSON.parse(topic_file)
 	Topic.create(
-		book_id: topic_hash['book_id'],
+		book_slug: topic_hash['book_slug'],
+    book_id: topic_hash['book_id'],
 		name: topic_hash['name'],
-		slug: topic_hash['id'])
+		slug: topic_hash['slug']
+  )
 end
