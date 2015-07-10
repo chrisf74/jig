@@ -26,6 +26,8 @@
 
 // Example App
 //= require app
+//= require_tree ./utils
 //= require_tree ./models
+//= require_tree ./views/shared
 //= require_tree ./views
 //= require_tree ./routes

@@ -1,0 +1,16 @@
+App.module "Utils", (Utils, App, Backbone, Marionette, $, _) ->
+  assetPaths = {}
+  imagePaths = assetPaths['images'] = {}
+
+  <%
+  images_dir =  Rails.root.join('app', 'assets', 'images')
+  images_dir_str = "#{images_dir.to_s}/"
+
+  Dir[images_dir.join('**')].each do |path|
+  relative_path = path.split(images_dir_str)[1]
+  %>
+  imagePaths["<%= relative_path %>"] = "<%= image_url(relative_path) %>";
+  <% end %>
+
+  Utils.imagePath = (path) ->
+    x = assetPaths['images'][path]

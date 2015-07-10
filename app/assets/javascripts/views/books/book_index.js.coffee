@@ -5,16 +5,22 @@ App.module "Books", (Books, App, Backbone, Marionette, $, _) ->
     regions:
       books: '.book-list'
 
+    collectionEvents:
+      'request': 'showLoadingView'
+      'sync'   : 'showLoadedView'
+
+    initialize: ->
+      @collection = @routeState.get('books')
+
     onRender: ->
-      books = @routeState.get('books')
-      books.fetch()
-        .done(=> 
-          @showChildView 'books', new Books.IndexList
-            collection: books
-        )
-        .fail(=> 
-          console.log 'books:load:error'
-        )
+      @collection.fetch()
+
+    showLoadingView: ->
+      @showChildView 'books', new App.Views.Loading
+
+    showLoadedView: ->
+      @showChildView 'books', new Books.IndexList
+        collection: @collection
 
   class Books.IndexListItem extends App.ItemView
     template: 'books/book_index_list_item'

@@ -1,5 +1,9 @@
 do (Backbone, Marionette, Jig, $, _) ->
   class App extends Jig.Application
+    onBeforeStart: ->
+      _.extend @templateHelpers,
+        imagePath: @Utils.imagePath
+
     start: (options) ->
       super options
 

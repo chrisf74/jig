@@ -13,7 +13,7 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
       @collection = @routeState.get('topics')
 
     showLoadingView: ->
-      console.log 'show:loading:view'
+      @showChildView 'topics', new App.Views.Loading
 
     showLoadedView: ->
       @showChildView 'topics', new Topics.IndexList

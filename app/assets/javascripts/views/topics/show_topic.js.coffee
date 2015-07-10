@@ -17,7 +17,8 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
       @model.fetch()
 
     showLoadingView: ->
-      console.log 'show:loading:view'
+      @showChildView 'content', new App.Views.Loading
+      @showChildView 'toc', new App.Views.Loading
 
     showLoadedView: ->
       @showChildView 'content', new Topics.ShowContent
