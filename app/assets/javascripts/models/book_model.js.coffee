@@ -6,7 +6,7 @@ App.module "Models", (Models, App, Backbone, Marionette, $, _) ->
     url: ->
       "/api/books/#{@id}.json"
 
-    initialize: (attrs, options) ->
+    initialize: (attrs = {}, options) ->
       @topics = new Models.Topics(attrs.topics)
 
     parse: (attrs) ->

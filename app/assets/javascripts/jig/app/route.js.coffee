@@ -136,8 +136,7 @@ do (Backbone, Marionette, Jig, $, _) ->
         proceed = @action?()
         return if proceed is false
 
-        # Set this routes state attributes on route state
-        # model.
+        # Set this routes state attributes on route state model.
         App.routeState._set(@state)
 
         # Run after action filters.
@@ -152,7 +151,6 @@ do (Backbone, Marionette, Jig, $, _) ->
       Stuff to do when route event is triggered.
       ### 
       onRoute: =>
-        delete @['params']
         delete @['state']
 
       ###

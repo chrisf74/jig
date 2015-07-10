@@ -5,16 +5,22 @@ App.module "Topics", (Topics, App, Backbone, Marionette, $, _) ->
     regions:
       topics: '.topic-list'
 
+    collectionEvents:
+      'request': 'showLoadingView'
+      'sync'   : 'showLoadedView'
+
+    initialize: ->
+      @collection = @routeState.get('topics')
+
+    showLoadingView: ->
+      console.log 'show:loading:view'
+
+    showLoadedView: ->
+      @showChildView 'topics', new Topics.IndexList
+        collection: @collection
+
     onRender: ->
-      topics = @routeState.get('topics')
-      topics.fetch()
-        .done(=> 
-          @showChildView 'topics', new Topics.IndexList
-            collection: topics
-        )
-        .fail(=> 
-          console.log 'topics:load:error'
-        )
+      @collection.fetch()
 
   class Topics.IndexListItem extends App.ItemView
     template: 'topics/topic_index_list_item'

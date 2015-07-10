@@ -1,0 +1,6 @@
+h2 #{name}
+ul
+	each topic in topics
+		li
+			a(href=getRouteUrl('topic', {topicId: topic.id}))
+				| #{topic.name}

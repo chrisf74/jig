@@ -27,3 +27,12 @@ do (Backbone, Marionette, Jig, $, _) ->
       unbindCustomEntityEvents: (args...) ->
         @unbindEntityEvents @routeState, @routeStateEvents
         return @
+
+      ###
+      Change the views model.
+      ###
+      changeModel: (model) ->
+        return if @isDestroyed
+        @undelegateEvents()
+        @model = model
+        @delegateEvents()
